@@ -62,4 +62,6 @@ export class AppTestHarness {
     await this.loginRegisterPresenter.login()
     return this.loginRegisterPresenter
   }
+
+  // maybe create a register help function here, if it will be used repeatedly
 }
