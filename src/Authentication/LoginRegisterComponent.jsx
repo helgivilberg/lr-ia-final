@@ -4,6 +4,10 @@ import { withInjection } from '../Core/Providers/Injection'
 import { LoginRegisterPresenter } from './LoginRegisterPresenter'
 import { MessagesComponent } from '../Core/Messages/MessagesComponent'
 
+function formValid() {
+  return true
+}
+
 const LoginRegisterComp = observer((props) => {
   return (
     <div className="login-register">

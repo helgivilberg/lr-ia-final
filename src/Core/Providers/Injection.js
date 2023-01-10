@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext } from 'react'
 
 const InversifyContext = React.createContext({ container: null })
 
