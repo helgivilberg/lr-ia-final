@@ -63,5 +63,16 @@ export class AppTestHarness {
     return this.loginRegisterPresenter
   }
 
-  // maybe create a register help function here, if it will be used repeatedly
+  setupRegister = async (registerStub, type) => {
+    this.dataGateway = this.container.get(Types.IDataGateway)
+    this.dataGateway.post = jest.fn().mockImplementation((path) => {
+      return Promise.resolve(registerStub())
+    })
+
+    this.loginRegisterPresenter = this.container.get(LoginRegisterPresenter)
+    this.loginRegisterPresenter.email = 'a@b.com'
+    this.loginRegisterPresenter.password = '123'
+    await this.loginRegisterPresenter.register()
+    return this.loginRegisterPresenter
+  }
 }

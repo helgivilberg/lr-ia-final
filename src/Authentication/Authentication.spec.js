@@ -65,35 +65,15 @@ describe('init', () => {
 
         describe('register', () => {
             it ('should show successful user message on successful register', async () => {
-                dataGateway.post = jest.fn().mockImplementation((email, password) => {
-                    return Promise.resolve(GetSuccessfulRegistrationStub())
-                })
-
-                const loginRegisterPresenter = appTestHarness.container.get(LoginRegisterPresenter)
-
-                loginRegisterPresenter.email = 'a@b.com'
-                loginRegisterPresenter.password = '12345'
-
-                await loginRegisterPresenter.register()
+                const loginRegisterPresenter = await appTestHarness.setupRegister(GetSuccessfulRegistrationStub)
                 expect(loginRegisterPresenter.showValidationWarning).toBe(false)
                 expect(loginRegisterPresenter.messages).toEqual(['User registered'])
             })
 
             it ('should show failed server message on failed register', async () => {
-                dataGateway.post = jest.fn().mockImplementation((email, password) => {
-                    return Promise.resolve(GetFailedRegistrationStub())
-                })
-
-                const loginRegisterPresenter = appTestHarness.container.get(LoginRegisterPresenter)
-
-                loginRegisterPresenter.email = 'a@b.com'
-                loginRegisterPresenter.password = '12345'
-
-                await loginRegisterPresenter.register()
+                const loginRegisterPresenter = await appTestHarness.setupRegister(GetFailedRegistrationStub)
                 expect(loginRegisterPresenter.showValidationWarning).toBe(true)
                 expect(loginRegisterPresenter.messages).toEqual(['Failed: credentials not valid must be (email and >3 chars on password).'])
-
-                // yay, 2 tests working! They are doing the same things with different stubs, lets try to greate a test harness function for it
             })
 
 
