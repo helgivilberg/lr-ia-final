@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { Types } from '../Core/Types'
 import { AppTestHarness } from '../TestTools/AppTestHarness'
 import { Router } from '../Routing/Router'

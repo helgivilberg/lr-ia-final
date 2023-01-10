@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { NavigationPresenter } from './NavigationPresenter'
 import { Router } from '../Routing/Router'
 import { Types } from '../Core/Types'
