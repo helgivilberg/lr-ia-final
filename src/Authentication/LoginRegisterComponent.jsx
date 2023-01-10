@@ -3,12 +3,25 @@ import { observer } from 'mobx-react'
 import { withInjection } from '../Core/Providers/Injection'
 import { LoginRegisterPresenter } from './LoginRegisterPresenter'
 import { MessagesComponent } from '../Core/Messages/MessagesComponent'
+import { useValidation } from '../Core/Providers/Validation'
 
-function formValid() {
-  return true
-}
+
 
 const LoginRegisterComp = observer((props) => {
+  const [, updateClientValidationMessages] = useValidation()
+
+  let formValid = () => {
+    let clientValidationMessages = []
+    if (props.presenter.email === '') {
+      clientValidationMessages.push('Email address missing')
+    }
+    if (props.presenter.password === '') {
+      clientValidationMessages.push('Password cannot be empty')
+    }
+    updateClientValidationMessages(clientValidationMessages)
+    return clientValidationMessages.length === 0
+  }
+
   return (
     <div className="login-register">
       <div className="w3-row">

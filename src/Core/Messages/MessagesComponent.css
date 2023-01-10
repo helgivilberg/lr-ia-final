@@ -1,0 +1,16 @@
+.messages-error,
+.messages-warning {
+  padding: 12px;
+  margin-top: 10px;
+}
+
+
+.messages-error {
+  background: red;
+  color: white;
+}
+
+.messages-warning {
+  background: rgb(255, 174, 0);
+  color: white;
+}

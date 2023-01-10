@@ -6,9 +6,19 @@ import { NavigationComponent } from './Navigation/NavigationComponent'
 import { HomeComponent } from './Home/HomeComponent'
 import { LoginRegisterComponent } from './Authentication/LoginRegisterComponent'
 import { MessagesRepository } from './Core/Messages/MessagesRepository'
+import { useValidation } from './Core/Providers/Validation'
 
 export const AppComp = observer((props) => {
-  React.useEffect(() => {}, [])
+  const [, updateClientValidationMessages] = useValidation()
+
+
+  React.useEffect(() => {
+    props.presenter.load(onRouteChange)
+  }, [])
+
+  const onRouteChange = () => {
+    updateClientValidationMessages([])
+  }
 
   const renderedComponents = [
     {

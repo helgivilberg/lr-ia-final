@@ -3,6 +3,7 @@ import { observer } from 'mobx-react'
 import { MessagesPresenter } from '../Messages/MessagesPresenter'
 import { withInjection } from '../Providers/Injection'
 import { useValidation } from '../Providers/Validation'
+import './MessagesComponent.css'
 
 export const MessagesComp = observer((props) => {
   let [uiMessages] = useValidation()
@@ -12,7 +13,7 @@ export const MessagesComp = observer((props) => {
       {props.presenter.messages &&
         props.presenter.messages.map((item, i) => {
           return (
-            <div style={{ backgroundColor: 'red' }} key={i}>
+            <div className="messages-error" key={i}>
               {' - '}
               {item}
             </div>
@@ -21,7 +22,7 @@ export const MessagesComp = observer((props) => {
       {uiMessages &&
         uiMessages.map((item, i) => {
           return (
-            <div style={{ backgroundColor: 'orange' }} key={i}>
+            <div className="messages-warning"  key={i}>
               {' - '}
               {item}
             </div>
