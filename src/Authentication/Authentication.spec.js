@@ -10,6 +10,7 @@ import { container } from '../AppIOC'
 import { UserModel } from './UserModel'
 import { GetFailedRegistrationStub } from '../TestTools/GetFailedRegistrationStub'
 import { GetSuccessfulUserLoginStub } from '../TestTools/GetSuccessfulUserLoginStub'
+import { GetFailedUserLoginStub } from '../TestTools/GetFailedUserLoginStub'
 
 let appTestHarness = null
 let router = null
@@ -95,11 +96,43 @@ describe('init', () => {
                 })
 
             })
-            it('should update private route when successful login', () => {})
-            it('should not update route when failed login', () => {})
-            it('should show failed user message on failed login', () => {})
-            it('should clear messages on route change', () => {})
-            it('should logout', () => {})
+            it('should update private route when successful login', async () => {
+                expect(routerRepository.currentRoute.routeId).toBe(null)
+                const loginRegisterPresenter = await appTestHarness.setupLogin(GetSuccessfulUserLoginStub)
+
+                expect(routerRepository.currentRoute.routeId).toBe('homeLink')
+            })
+            it('should not update route when failed login', async () => {
+                expect(routerRepository.currentRoute.routeId).toBe(null)
+
+                const loginRegisterPresenter = await appTestHarness.setupLogin(GetFailedUserLoginStub)
+                expect(routerRepository.currentRoute.routeId).toBe(null)
+            })
+            it('should show failed user message on failed login', async () => {
+                const loginRegisterPresenter = await appTestHarness.setupLogin(GetFailedUserLoginStub)
+                expect(loginRegisterPresenter.showValidationWarning).toBe(true)
+                expect(loginRegisterPresenter.messages).toEqual(['Failed: no user record.'])
+
+            })
+            it('should clear messages on route change', async () => {
+                expect(routerRepository.currentRoute.routeId).toBe(null)
+
+                let loginRegisterPresenter = await appTestHarness.setupLogin(GetFailedUserLoginStub)
+                expect(loginRegisterPresenter.messages).toEqual(['Failed: no user record.'])
+                loginRegisterPresenter = await appTestHarness.setupLogin(GetSuccessfulUserLoginStub)
+                expect(routerRepository.currentRoute.routeId).toBe('homeLink')
+                expect(loginRegisterPresenter.messages).toEqual([])
+
+            })
+            it('should logout', async () => {
+                let loginRegisterPresenter = await appTestHarness.setupLogin(GetSuccessfulUserLoginStub)
+
+                await loginRegisterPresenter.logOut()
+                expect(userModel).toEqual({
+                    email: "",
+                    token: ""
+                })
+            })
         })
     })
 })
