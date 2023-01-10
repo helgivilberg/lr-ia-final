@@ -9,6 +9,7 @@ import { GetSuccessfulRegistrationStub } from '../TestTools/GetSuccessfulRegistr
 import { container } from '../AppIOC'
 import { UserModel } from './UserModel'
 import { GetFailedRegistrationStub } from '../TestTools/GetFailedRegistrationStub'
+import { GetSuccessfulUserLoginStub } from '../TestTools/GetSuccessfulUserLoginStub'
 
 let appTestHarness = null
 let router = null
@@ -79,8 +80,21 @@ describe('init', () => {
 
         })
         describe('login', () => {
-            it('should start at loginLink ', () => {})
-            it('should go to homeLink on successful login (and populate userModel)', () => {})
+            it('should start at loginLink ', () => {
+                router.goToId('default') // hmmmm
+
+                expect(routerGateway.goToId).toHaveBeenLastCalledWith('loginLink')
+            })
+            it('should go to homeLink on successful login (and populate userModel)', async () => {
+                const loginRegisterPresenter = await appTestHarness.setupLogin(GetSuccessfulUserLoginStub)
+
+                expect(routerGateway.goToId).toHaveBeenLastCalledWith('homeLink')
+                expect(userModel).toEqual({
+                    "email": "a@b.com",
+                    "token": "a@b1234.com"
+                })
+
+            })
             it('should update private route when successful login', () => {})
             it('should not update route when failed login', () => {})
             it('should show failed user message on failed login', () => {})
