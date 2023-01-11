@@ -7,49 +7,55 @@ import { HomeComponent } from './Home/HomeComponent'
 import { LoginRegisterComponent } from './Authentication/LoginRegisterComponent'
 import { MessagesRepository } from './Core/Messages/MessagesRepository'
 import { useValidation } from './Core/Providers/Validation'
+import { AuthorsComponent } from './Authors/AuthorsComponent'
+import { BooksComponent } from './Books/BooksComponent'
 
-export const AppComp = observer((props) => {
-  const [, updateClientValidationMessages] = useValidation()
+export const AppComp = observer(props => {
+    const [, updateClientValidationMessages] = useValidation()
 
+    React.useEffect(() => {
+        props.presenter.load(onRouteChange)
+    }, [])
 
-  React.useEffect(() => {
-    props.presenter.load(onRouteChange)
-  }, [])
-
-  const onRouteChange = () => {
-    updateClientValidationMessages([])
-  }
-
-  const renderedComponents = [
-    {
-      id: 'homeLink',
-      component: <HomeComponent key="homePage" />
+    const onRouteChange = () => {
+        updateClientValidationMessages([])
     }
-  ]
 
-  return (
-    <div className="container">
-      {props.presenter.currentRoute.routeId === 'loginLink' ? (
-        <>
-          <LoginRegisterComponent />
-        </>
-      ) : (
-        <div className="w3-row">
-          <div className="w3-col s4 w3-center">
-            <NavigationComponent />
-          </div>
-          <div className="w3-col s8 w3-left">
-            {renderedComponents.map((current) => {
-              return props.presenter.currentRoute.routeId === current.id && current.component
-            })}
-          </div>
+    const renderedComponents = [
+        {
+            id: 'homeLink',
+            component: <HomeComponent key="homePage" />
+        },
+        {
+            id: 'authorsLink',
+            component: <AuthorsComponent key="authorsLink" />
+        },
+        { id: 'booksLink', component: <BooksComponent key="booksLink" /> },
+    ]
+
+    return (
+        <div className="container">
+            {props.presenter.currentRoute.routeId === 'loginLink' ? (
+                <>
+                    <LoginRegisterComponent />
+                </>
+            ) : (
+                <div className="w3-row">
+                    <div className="w3-col s4 w3-center">
+                        <NavigationComponent />
+                    </div>
+                    <div className="w3-col s8 w3-left">
+                        {renderedComponents.map(current => {
+                            return props.presenter.currentRoute.routeId === current.id && current.component
+                        })}
+                    </div>
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  )
+    )
 })
 
 export const AppComponent = withInjection({
-  presenter: AppPresenter,
-  messagesRepository: MessagesRepository
+    presenter: AppPresenter,
+    messagesRepository: MessagesRepository
 })(AppComp)

@@ -1,3 +1,5 @@
 {
-  "html.format.wrapLineLength": 400
+  "html.format.wrapLineLength": 400,
+  "jest.jestCommandLine": "npm run test --",
+  "jest.rootPath": "./src"
 }

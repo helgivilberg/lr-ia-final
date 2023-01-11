@@ -1,10 +1,14 @@
 import { makeObservable, observable } from 'mobx'
 import { inject, injectable } from 'inversify'
 import { Types } from '../Core/Types'
+import { BooksRepository } from '../Books/BooksRepository'
 
 @injectable()
 export class RouterRepository {
   currentRoute = { routeId: null }
+
+  @inject(BooksRepository)
+  booksRepository
 
   @inject(Types.IRouterGateway)
   routerGateway
@@ -24,6 +28,47 @@ export class RouterRepository {
       routeDef: {
         path: '/app/home',
         isSecure: true
+      }
+    },
+    {
+      routeId: 'booksLink',
+      routeDef: {
+        path: '/app/books',
+        isSecure: true
+      },
+      onEnter: () => {
+        this.booksRepository.load()
+      },
+      onLeave: () => {
+        this.booksRepository.reset()
+      }
+    },
+    {
+      routeId: 'addBooksLink',
+      routeDef: {
+        path: '/app/books/add',
+        isSecure: true
+      }
+    },
+    {
+      routeId: 'authorsLink',
+      routeDef: {
+        path: '/app/authors/',
+        isSecure: true
+      }
+    },
+    {
+      routeId: 'authorsLink-authorPolicyLink',
+      routeDef: {
+        path: '/app/authors/policy',
+        isSecure: false
+      }
+    },
+    {
+      routeId: 'authorsLink-mapLink',
+      routeDef: {
+        path: '/app/authors/map',
+        isSecure: false
       }
     },
     {
