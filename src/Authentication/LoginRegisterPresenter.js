@@ -12,8 +12,8 @@ export class LoginRegisterPresenter extends MessagesPresenter {
   @inject(Router)
   router
 
-  email = null
-  password = null
+  email = 'a@b.com' //null
+  password = '123456' //null
   option = null
 
   constructor() {
@@ -31,8 +31,8 @@ export class LoginRegisterPresenter extends MessagesPresenter {
   }
 
   reset = () => {
-    this.email = ''
-    this.password = ''
+    this.email = 'a@b.com' //''
+    this.password = '123456' //''
     this.option = 'login'
   }
 
