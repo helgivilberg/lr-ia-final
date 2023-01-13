@@ -34,10 +34,12 @@ export class BooksPresenter extends MessagesPresenter {
     addBook = async () => {
         let addBookPm = await this.booksRepository.addBook(this.newBookName)
         await this.booksRepository.load()
-        const lastAddedBookPm = this.booksRepository.bookList[this.booksRepository.bookList.length-1]
+        const lastAddedBookPm = this.booksRepository.books[this.booksRepository.books.length-1]
         this.lastAddedBook = {
             visibleName: lastAddedBookPm.name
         }
         this.unpackRepositoryPmToVm(addBookPm, 'Book added')
       }
+
+
 }

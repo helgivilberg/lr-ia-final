@@ -8,7 +8,7 @@ export class BookListPresenter {
     booksRepository
 
     get viewModel() {
-        return this.booksRepository.bookList.map(x => {
+        return this.booksRepository.books.map(x => {
             return {
                 visibleName: x.name
             }

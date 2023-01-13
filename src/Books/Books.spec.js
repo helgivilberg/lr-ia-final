@@ -42,7 +42,7 @@ describe('books', () => {
 
     describe('loading',  () => {
         it('should show book list', async () => {
-            await booksRepository.load() // I feel like this should be booksPresenter
+            await booksPresenter.load() // I feel like this should be booksPresenter
 
             expect(dataGateway.get).toHaveBeenCalled()
             expect(bookListPresenter.viewModel.length).toBeGreaterThan(0)

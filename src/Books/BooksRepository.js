@@ -19,35 +19,26 @@ export class BooksRepository {
     config
 
     messagePm = 'UNSET'
-    bookList = []
+    books = []
 
     constructor() {
         makeObservable(this, {
             messagePm: observable,
-            bookList: observable
+            books: observable
          })
     }
 
     load = async () => { // this gets called by the router onEnter
-        // setTimeout(() => {
-        //     this.messagePm = 'LOADED'
-        //     this.bookList = [
-        //         {
-        //             name: "foo 1"
-        //         },
-        //         {
-        //             name: "foo 2"
-        //         }
-        //     ]
-        // }, 2000)
+
 
         // getBooks
         const ownerId = this.userModel.email
         const booksDto = await this.dataGateway.get('/books?emailOwnerId='+ownerId)
 
         if (booksDto.success) {
-            this.bookList = booksDto.result
-            this.messagePm = 'Loaded'
+            this.books = booksDto.result.map((bookDto) => {
+                return { name: bookDto.name, id: bookDto.bookId }
+            })
         } else {
             this.messagePm = 'Error' // maybe not?
         }
@@ -59,6 +50,7 @@ export class BooksRepository {
 
     reset = () => {
         this.messagePm = 'RESET'
+        this.books = []
     }
 
     addBook = async (bookName) => {
@@ -67,8 +59,24 @@ export class BooksRepository {
             emailOwnerId: this.userModel.email
         })
 
-        return responseDto
+        let addBookPm = MessagePacking.unpackServerDtoToPm(responseDto)
+        addBookPm.bookId = responseDto.result.bookId
 
+        return addBookPm
+
+    }
+
+    addBookTempStaging = async (bookName) => {
+        this.books.push({ name: bookName, id: null })
+    }
+
+    getBook = async (bookId) => {
+        const ownerId = this.userModel.email
+
+        const getBookDto = await this.dataGateway.get('/book?emailOwdnerId'+ownerId)
+        let getBookPm = MessagePacking.unpackServerDtoToPm(getBookDto)
+        getBookPm.name = getBookDto.result[0].name
+        return getBookPm
     }
 
 }
