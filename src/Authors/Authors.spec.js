@@ -8,7 +8,7 @@ import { SingleBookResultStub } from '../TestTools/SingleBookResultStub'
 import { SingleAuthorsResultStub } from '../TestTools/SingleAuthorsResultStub'
 import { AppTestHarness } from '../TestTools/AppTestHarness'
 import { AuthorsPresenter } from './AuthorsPresenter'
-import { BookListPresenter } from '../Books/BooksList/BookListPresenter'
+import { BookListPresenter } from '../Books/BookList/BookListPresenter'
 import { BooksRepository } from '../Books/BooksRepository'
 import { BooksPresenter } from '../Books/BooksPresenter'
 
@@ -73,13 +73,36 @@ describe('authors', () => {
 
         })
 
-        await authorsPresenter.load()
+        await authorsPresenter.load() //
         expect(authorsPresenter.authors.length).toBeGreaterThan(4)
         expect(authorsPresenter.showList).toBe(false)
     })
   })
 
+
+  // refactor together these pivots
+
+
   describe('saving', () => {
+
+    beforeEach(() => {
+        dataGateway.post.mockImplementation((path, body) => {
+            if (path.indexOf('/books') !== -1) {
+                if (body.name === "Foo 1") {
+                    return Promise.resolve(GetSuccessfulBookAddedStub(91))
+                }
+
+                if (body.name === "Foo 2") {
+                    return Promise.resolve(GetSuccessfulBookAddedStub(92))
+                }
+            }
+
+            if (path.indexOf('/authors') !== -1) {
+                return Promise.resolve(GetSuccessfulAuthorAddedStub());
+            }
+        })
+
+    })
     it('should allow single author to be added and will reload authors list', async () => {
 
         authorsPresenter.newAuthorName = 'New Author Name'
@@ -99,6 +122,13 @@ describe('authors', () => {
 
         await authorsPresenter.addAuthorAndBooks()
 
+        // We have to make sure our ui is calling the endpoint correctly
+        expect(dataGateway.post).toHaveBeenCalledWith('/authors', {
+            emailOwnerId: 'a@b.com', // TODO refactor
+            bookIds: [],
+            name: 'New Author Name'
+        })
+
         // endpoint should be called
         expect(dataGateway.get).toHaveBeenCalledWith('/authors?emailOwnerId=a@b.com')
 
@@ -107,9 +137,9 @@ describe('authors', () => {
 
     it('should allow books to be staged and then save authors and books to api', async () => {
         authorsPresenter.newBookName = 'Foo 1'
-        await authorsPresenter.addBookStaging()
+        await authorsPresenter.addBook()
         authorsPresenter.newBookName = 'Foo 2'
-        await authorsPresenter.addBookStaging()
+        await authorsPresenter.addBook()
         authorsPresenter.newAuthorName = 'New Author Name'
 
         // pivot
@@ -125,14 +155,32 @@ describe('authors', () => {
             }
         })
 
+
         await authorsPresenter.addAuthorAndBooks()
 
+        expect(dataGateway.post).toHaveBeenCalledWith('/books', {
+            emailOwnerId: 'a@b.com', // TODO refactor
+            name: 'Foo 1'
+        })
+
+        expect(dataGateway.post).toHaveBeenCalledWith('/books', {
+            emailOwnerId: 'a@b.com', // TODO refactor
+            name: 'Foo 2'
+        })
+
+        expect(dataGateway.post).toHaveBeenCalledWith('/authors', {
+            emailOwnerId: 'a@b.com', // TODO refactor
+            bookIds: [91, 92],
+            name: 'New Author Name'
+        })
 
 
 
         // endpoint should be called
         expect(dataGateway.get).toHaveBeenCalledWith('/authors?emailOwnerId=a@b.com')
 
+        // the author should be added to the authors list
+        // and it should have references to books
         expect(authorsPresenter.authors[2].displayName).toBe("New Author Name")
         expect(authorsPresenter.authors[2].books[0].id).toEqual(91)
         expect(authorsPresenter.authors[2].books[1].id).toEqual(92)

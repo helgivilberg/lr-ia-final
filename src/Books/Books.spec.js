@@ -5,7 +5,7 @@ import { AppTestHarness } from '../TestTools/AppTestHarness';
 import { GetSuccessfulBookAddedStub } from '../TestTools/GetSuccessfulBookAddedStub';
 import { GetSuccessfulRegistrationStub } from '../TestTools/GetSuccessfulRegistrationStub';
 import { SingleBooksResultStub } from '../TestTools/SingleBooksResultStub';
-import { BookListPresenter } from './BooksList/BookListPresenter';
+import { BookListPresenter } from './BookList/BookListPresenter';
 import { BooksPresenter } from './BooksPresenter';
 import { BooksRepository } from './BooksRepository';
 

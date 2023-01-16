@@ -18,7 +18,8 @@ export class AuthorsPresenter extends MessagesPresenter {
             authors: computed,
             newAuthorName: observable,
             newBookName: observable,
-            showList: computed
+            showList: computed,
+            reset: action
         })
 
         this.init() // for the MessagesPresenter
@@ -59,13 +60,17 @@ export class AuthorsPresenter extends MessagesPresenter {
     //     this.unpackRepositoryPmToVm(addBookPm, 'Book added')
     //   }
 
-    addBookStaging = async () => {
+    addBook = async () => {
+        console.log("adding book")
         await this.authorsRepository.addBookStaging(this.newBookName)
-        this.reset()
+        this.newBookName = ''
+        // this.reset()
     }
 
     addAuthorAndBooks = async () => {
-        await this.authorsRepository.addAuthorAndBooks()
+        let authorAddedPm = await this.authorsRepository.addAuthorAndBooks(this.newAuthorName)
+        this.reset()
         await this.load()
+        this.unpackRepositoryPmToVm(authorAddedPm, 'Author added')
     }
 }

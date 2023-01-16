@@ -9,7 +9,7 @@ export class BooksPresenter extends MessagesPresenter {
     @inject(BooksRepository)
     booksRepository
 
-    newBookName = '' // <--
+    newBookName = '' // both in BooksPresenter and AuthorsPresenter
     lastAddedBook = null // <--
 
     constructor() {

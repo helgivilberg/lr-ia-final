@@ -4,7 +4,7 @@ import { withInjection } from '../Core/Providers/Injection'
 import { BooksPresenter } from './BooksPresenter'
 import { MessagesComponent } from '../Core/Messages/MessagesComponent'
 import { AddBooksComponent } from './AddBooks/AddBooksComponent'
-import { BookListComponent } from './BooksList/BookListComponent'
+import { BookListComponent } from './BookList/BookListComponent'
 import { LastAddedBookComponent } from './LastAddedBookComponent'
 
 

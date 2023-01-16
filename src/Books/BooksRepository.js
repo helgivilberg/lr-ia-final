@@ -66,8 +66,8 @@ export class BooksRepository {
 
     }
 
-    addBookTempStaging = async (bookName) => {
-        this.books.push({ name: bookName, id: null })
+    addBookStaging = async (bookName) => {
+        this.books.push({ name: bookName })
     }
 
     getBook = async (bookId) => {

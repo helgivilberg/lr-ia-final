@@ -4,6 +4,8 @@ import { RouterRepository } from './Routing/RouterRepository'
 import { UserModel } from './Authentication/UserModel'
 import { NavigationRepository } from './Navigation/NavigationRepository'
 import { BooksRepository } from './Books/BooksRepository'
+import { AuthorsRepository } from './Authors/AuthorsRepository'
+import { AuthorsPresenter } from './Authors/AuthorsPresenter'
 
 export class BaseIOC {
   container
@@ -21,6 +23,8 @@ export class BaseIOC {
     this.container.bind(NavigationRepository).to(NavigationRepository).inSingletonScope()
     this.container.bind(UserModel).to(UserModel).inSingletonScope()
     this.container.bind(BooksRepository).to(BooksRepository).inSingletonScope()
+    this.container.bind(AuthorsRepository).to(AuthorsRepository).inSingletonScope()
+    this.container.bind(AuthorsPresenter).to(AuthorsPresenter).inSingletonScope()
     return this.container
   }
 }

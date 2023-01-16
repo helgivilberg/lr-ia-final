@@ -4,12 +4,13 @@ import { makeObservable, action, toJS, observable } from 'mobx'
 import { Types } from '../Core/Types'
 import { UserModel } from '../Authentication/UserModel'
 import { MessagePacking } from '../Core/Messages/MessagePacking'
+import { BooksRepository } from '../Books/BooksRepository'
 
 @injectable()
 export class AuthorsRepository {
     baseUrl
 
-    @inject(Types.IDataGateway)
+        @inject(Types.IDataGateway)
     dataGateway
 
     @inject(UserModel)
@@ -17,6 +18,9 @@ export class AuthorsRepository {
 
     @inject(Config)
     config
+
+    @inject(BooksRepository)
+    booksRepository
 
     messagePm = 'UNSET'
     authors = []
@@ -76,16 +80,16 @@ export class AuthorsRepository {
     // }
 
     addBookStaging = async (name)  => {
-        this.books.push(name)
+        this.booksRepository.addBookStaging(name)
     }
 
     addAuthorAndBooks = async (newAuthorName) => {
 
         // post each book
         let bookIds = []
-        for (const bookName of this.books) {
+        for (const book of this.booksRepository.books) {
             const responseDto = await this.dataGateway.post('/books', {
-                name: bookName,
+                name: book.name,
                 emailOwnerId: this.userModel.email
             })
 
