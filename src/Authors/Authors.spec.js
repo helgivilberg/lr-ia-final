@@ -77,6 +77,13 @@ describe('authors', () => {
         expect(authorsPresenter.authors.length).toBeGreaterThan(4)
         expect(authorsPresenter.showList).toBe(false)
     })
+
+    it('should show/hide author list when you  toggle manually', async () => {
+        await authorsPresenter.load() //
+        expect(authorsPresenter.showList).toBe(true)
+        authorsPresenter.toggleShowList()
+        expect(authorsPresenter.showList).toBe(false)
+    })
   })
 
 

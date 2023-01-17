@@ -11,6 +11,7 @@ export class AuthorsPresenter extends MessagesPresenter {
 
     newAuthorName = ''
     newBookName = ''
+    showList = false
 
     constructor() {
         super()
@@ -18,7 +19,7 @@ export class AuthorsPresenter extends MessagesPresenter {
             authors: computed,
             newAuthorName: observable,
             newBookName: observable,
-            showList: computed,
+            showList: observable,
             reset: action
         })
 
@@ -36,8 +37,8 @@ export class AuthorsPresenter extends MessagesPresenter {
         })
     }
 
-    get showList() {
-        return this.authors.length <= 4
+    toggleShowList = () => {
+        this.showList = !this.showList
     }
 
     reset = () => {
@@ -48,6 +49,7 @@ export class AuthorsPresenter extends MessagesPresenter {
 
     load = async () => {
         await this.authorsRepository.load()
+        this.showList = this.authors.length <= 4
     }
 
     // addBook = async () => {

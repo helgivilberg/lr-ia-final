@@ -32,7 +32,6 @@ export const AddBooksComponent = observer(props => {
                         value={props.presenter.newBookName}
                         placeholder="Enter book name"
                         onChange={event => {
-                            console.log("on change")
                             props.presenter.newBookName = event.target.value
                         }}
                     />

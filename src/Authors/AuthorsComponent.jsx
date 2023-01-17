@@ -8,6 +8,7 @@ import { BookListComponent } from '../Books/BookList/BookListComponent'
 import { AuthorsPresenter } from './AuthorsPresenter'
 import { MessagesComponent } from '../Core/Messages/MessagesComponent'
 import { useValidation } from '../Core/Providers/Validation'
+import { AuthorShowHideButtonComponent } from './AuthorShowHideButtonComponent/AuthorShowHideButtonComponent'
 
 export const AuthorsComp = observer(props => {
     console.log("AuthorsComp: ", props)
@@ -33,7 +34,7 @@ export const AuthorsComp = observer(props => {
     return (
         <>
             <h1>AUTHORS</h1>
-            <input value="show author list" type="button" onClick={props.presenter.toggleShowBooks} />
+            <AuthorShowHideButtonComponent value={props.presenter.showList} toggle={props.presenter.toggleShowList} />
             <br />
             <AuthorListComponent />
             <br />

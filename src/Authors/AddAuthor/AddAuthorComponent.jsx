@@ -31,9 +31,7 @@ export const AddAuthorComp = observer((props) => {
                     console.log("props.presenter.newAuthorName", props.presenter.newAuthorName)
                 }}>
         <input type="text" value={presenter.newAuthorName} onChange={(e) => {
-            console.log("foo")
             presenter.newAuthorName = e.currentTarget.value
-            console.log("bar")
         }
 
             } />

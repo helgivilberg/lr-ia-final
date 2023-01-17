@@ -5,13 +5,15 @@ import { AuthorsPresenter } from '../AuthorsPresenter'
 
 
 export const AuthorListComp = observer((props) => {
-    console.log("AuthorsList", props.presenter.authors)
+    const { presenter } = props
+
     return (
         <>
-        {props.presenter.authors.map((author, i) => {
+        {presenter.showList &&
+            presenter.authors.map((author, i) => {
             return <div key={i}>{author.displayName}</div>
         })}
-        </>
+       </>
     )
 })
 
