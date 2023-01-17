@@ -88,5 +88,12 @@ describe('books', () => {
         it('should show the last added book', async () => {
             expect(booksPresenter.lastAddedBook.visibleName).toBe('The Dark Forest')
         })
+
+        // it('cannot add a book with no name', async () => {
+            // oh, it's validated only in the React Component
+        //     booksPresenter.newBookName = ''
+        //     booksPresenter.addBook()
+        //     expect(booksPresenter.messages).toEqual('No book name')
+        // })
     })
 })
