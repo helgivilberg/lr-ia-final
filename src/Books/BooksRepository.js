@@ -4,12 +4,13 @@ import { makeObservable, action, toJS, observable } from 'mobx'
 import { Types } from '../Core/Types'
 import { UserModel } from '../Authentication/UserModel'
 import { MessagePacking } from '../Core/Messages/MessagePacking'
+import { HttpGateway } from '../Core/HttpGateway'
 
 @injectable()
 export class BooksRepository {
     baseUrl
 
-    @inject(Types.IDataGateway)
+    @inject(HttpGateway)
     dataGateway
 
     @inject(UserModel)

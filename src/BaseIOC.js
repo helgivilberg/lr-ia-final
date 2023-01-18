@@ -6,6 +6,7 @@ import { NavigationRepository } from './Navigation/NavigationRepository'
 import { BooksRepository } from './Books/BooksRepository'
 import { AuthorsRepository } from './Authors/AuthorsRepository'
 import { AuthorsPresenter } from './Authors/AuthorsPresenter'
+import { HttpGateway } from './Core/HttpGateway'
 
 export class BaseIOC {
   container
@@ -18,6 +19,8 @@ export class BaseIOC {
   }
 
   buildBaseTemplate = () => {
+    this.container.bind(HttpGateway).to(HttpGateway).inSingletonScope()
+
     this.container.bind(MessagesRepository).to(MessagesRepository).inSingletonScope()
     this.container.bind(RouterRepository).to(RouterRepository).inSingletonScope()
     this.container.bind(NavigationRepository).to(NavigationRepository).inSingletonScope()

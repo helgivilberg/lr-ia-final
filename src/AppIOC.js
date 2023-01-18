@@ -5,5 +5,5 @@ import { BaseIOC } from './BaseIOC'
 
 export const container = new BaseIOC().buildBaseTemplate()
 
-container.bind(Types.IDataGateway).to(HttpGateway).inSingletonScope()
+// container.bind(Types.IDataGateway).to(HttpGateway).inSingletonScope()
 container.bind(Types.IRouterGateway).to(RouterGateway).inSingletonScope()

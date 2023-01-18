@@ -5,12 +5,13 @@ import { Types } from '../Core/Types'
 import { UserModel } from '../Authentication/UserModel'
 import { MessagePacking } from '../Core/Messages/MessagePacking'
 import { BooksRepository } from '../Books/BooksRepository'
+import { HttpGateway } from '../Core/HttpGateway'
 
 @injectable()
 export class AuthorsRepository {
     baseUrl
 
-        @inject(Types.IDataGateway)
+    @inject(HttpGateway)
     dataGateway
 
     @inject(UserModel)

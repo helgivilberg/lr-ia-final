@@ -7,6 +7,7 @@ import { SingleBooksResultStub } from './SingleBooksResultStub'
 import { Router } from '../Routing/Router'
 import { AppPresenter } from '../AppPresenter'
 import { RouterRepository } from '../Routing/RouterRepository'
+import { HttpGateway } from '../Core/HttpGateway'
 
 export class AppTestHarness {
   container
@@ -25,7 +26,9 @@ export class AppTestHarness {
   init() {
     this.container = new BaseIOC().buildBaseTemplate()
 
-    this.container.bind(Types.IDataGateway).to(FakeHttpGateway).inSingletonScope()
+    // this.container.bind(HttpGateway).to(FakeHttpGateway).inSingletonScope()
+    // this.container.bind(HttpGateway).to(HttpGateway).inSingletonScope()
+
     this.container.bind(Types.IRouterGateway).to(FakeRouterGateway).inSingletonScope()
 
     this.appPresenter = this.container.get(AppPresenter)
@@ -48,7 +51,7 @@ export class AppTestHarness {
 
   // 3. login or register to the app
   setupLogin = async (loginStub, type) => {
-    this.dataGateway = this.container.get(Types.IDataGateway)
+    this.dataGateway = this.container.get(HttpGateway)
     this.dataGateway.get = jest.fn().mockImplementation((path) => {
       return Promise.resolve(SingleBooksResultStub())
     })
@@ -64,7 +67,7 @@ export class AppTestHarness {
   }
 
   setupRegister = async (registerStub, type) => {
-    this.dataGateway = this.container.get(Types.IDataGateway)
+    this.dataGateway = this.container.get(HttpGateway)
     this.dataGateway.post = jest.fn().mockImplementation((path) => {
       return Promise.resolve(registerStub())
     })

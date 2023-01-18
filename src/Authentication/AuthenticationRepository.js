@@ -4,13 +4,14 @@ import { Types } from '../Core/Types'
 import { Router } from '../Routing/Router'
 import { UserModel } from '../Authentication/UserModel'
 import { MessagePacking } from '../Core/Messages/MessagePacking'
+import { HttpGateway } from '../Core/HttpGateway'
 
 @injectable()
 export class AuthenticationRepository {
   @inject(Router)
   router
 
-  @inject(Types.IDataGateway)
+  @inject(HttpGateway)
   dataGateway
 
   @inject(UserModel)

@@ -11,6 +11,7 @@ import { UserModel } from './UserModel'
 import { GetFailedRegistrationStub } from '../TestTools/GetFailedRegistrationStub'
 import { GetSuccessfulUserLoginStub } from '../TestTools/GetSuccessfulUserLoginStub'
 import { GetFailedUserLoginStub } from '../TestTools/GetFailedUserLoginStub'
+import { HttpGateway } from '../Core/HttpGateway'
 
 let appTestHarness = null
 let router = null
@@ -27,7 +28,7 @@ describe('init', () => {
         router = appTestHarness.container.get(Router)
         routerRepository = appTestHarness.container.get(RouterRepository)
         routerGateway = appTestHarness.container.get(Types.IRouterGateway)
-        dataGateway = appTestHarness.container.get(Types.IDataGateway)
+        dataGateway = appTestHarness.container.get(HttpGateway)
         userModel = appTestHarness.container.get(UserModel)
         onRouteChange = () => {}
     })

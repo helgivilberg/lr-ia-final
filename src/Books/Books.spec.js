@@ -1,4 +1,5 @@
 import 'reflect-metadata'
+import { HttpGateway } from '../Core/HttpGateway';
 
 import { Types } from '../Core/Types';
 import { AppTestHarness } from '../TestTools/AppTestHarness';
@@ -25,7 +26,7 @@ describe('books', () => {
         // router = appTestHarness.container.get(Router)
         // routerRepository = appTestHarness.container.get(RouterRepository)
         // routerGateway = appTestHarness.container.get(Types.IRouterGateway)
-        dataGateway = appTestHarness.container.get(Types.IDataGateway)
+        dataGateway = appTestHarness.container.get(HttpGateway)
         // userModel = appTestHarness.container.get(UserModel)
         // onRouteChange = () => {}
         booksRepository = appTestHarness.container.get(BooksRepository)

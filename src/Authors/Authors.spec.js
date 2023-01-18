@@ -11,6 +11,7 @@ import { AuthorsPresenter } from './AuthorsPresenter'
 import { BookListPresenter } from '../Books/BookList/BookListPresenter'
 import { BooksRepository } from '../Books/BooksRepository'
 import { BooksPresenter } from '../Books/BooksPresenter'
+import { HttpGateway } from '../Core/HttpGateway'
 
 let appTestHarness = null
 let dataGateway = null
@@ -29,7 +30,7 @@ describe('authors', () => {
     authorsPresenter = appTestHarness.container.get(AuthorsPresenter)
     bookListPresenter = appTestHarness.container.get(BookListPresenter)
     booksRepository = appTestHarness.container.get(BooksRepository)
-    dataGateway = appTestHarness.container.get(Types.IDataGateway)
+    dataGateway = appTestHarness.container.get(HttpGateway)
     dynamicBookNamesStack = ['bookA', 'bookB', 'bookC']
     dynamicBookIdStack = [5, 4, 3, 2, 1]
 
