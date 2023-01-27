@@ -52,21 +52,10 @@ export class AuthorsPresenter extends MessagesPresenter {
         this.showList = this.authors.length <= 4
     }
 
-    // addBook = async () => {
-    //     let addBookPm = await this.authorsRepository.addBook(this.newBookName)
-    //     await this.authorsRepository.load()
-    //     const lastAddedBookPm = this.authorsRepository.bookList[this.authorsRepository.bookList.length-1]
-    //     this.lastAddedBook = {
-    //         visibleName: lastAddedBookPm.name
-    //     }
-    //     this.unpackRepositoryPmToVm(addBookPm, 'Book added')
-    //   }
 
     addBook = async () => {
-        console.log("adding book")
         await this.authorsRepository.addBookStaging(this.newBookName)
         this.newBookName = ''
-        // this.reset()
     }
 
     addAuthorAndBooks = async () => {

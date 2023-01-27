@@ -42,8 +42,8 @@ export class AppTestHarness {
   }
 
   // 2. bootstrap the app
-  bootStrap(onRouteChange) {
-    this.appPresenter.load(onRouteChange)
+  bootStrap(onRouteChanged) {
+    this.appPresenter.load(onRouteChanged)
   }
 
   // 3. login or register to the app

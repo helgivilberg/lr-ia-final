@@ -27,12 +27,13 @@ describe('books', () => {
         // routerGateway = appTestHarness.container.get(Types.IRouterGateway)
         dataGateway = appTestHarness.container.get(Types.IDataGateway)
         // userModel = appTestHarness.container.get(UserModel)
-        // onRouteChange = () => {}
+        let onRouteChanged = () => {}
+        appTestHarness.bootStrap(onRouteChanged)
+
         booksRepository = appTestHarness.container.get(BooksRepository)
         booksPresenter = appTestHarness.container.get(BooksPresenter)
         bookListPresenter = appTestHarness.container.get(BookListPresenter)
 
-        // commenting this out to see if we can skip login
         await appTestHarness.setupLogin(GetSuccessfulRegistrationStub, 'login')
 
         // dataGateway.get = jest.fn().mockImplementation((path) => {

@@ -37,7 +37,10 @@ export class Router {
       (newRoute.routeDef.isSecure && hasToken === true) || newRoute.routeDef.isSecure === false
 
     if (routeChanged) {
-      this.routerRepository.onRouteChanged()
+      if (!this.routerRepository.onRouteChanged) {
+
+      }
+      this.routerRepository.onRouteChanged() // what was this for? I don't remember
 
       if (protectedOrUnauthenticatedRoute) {
         this.routerRepository.goToId('loginLink')

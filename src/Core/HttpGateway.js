@@ -18,6 +18,8 @@ export class HttpGateway {
         Authorization: this.userModel.token
       }
     })
+    console.log("ok?", response.ok)
+    console.log("status?", response.status)
     const dto = response.json()
     return dto
   }

@@ -21,10 +21,10 @@ export class AppPresenter {
     })
   }
 
-  load = (onRouteChange) => {
+  load = (onRouteChanged) => {
     const onRouteChangeWrapper = () => {
       this.messagesRepository.appMessages = []
-      onRouteChange()
+      onRouteChanged()
     }
     this.router.registerRoutes(onRouteChangeWrapper)
   }
